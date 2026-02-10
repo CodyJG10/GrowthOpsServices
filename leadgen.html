@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GrowthOps – Lead Generation</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0B1120;
+      --surface: #111827;
+      --blue: #3B82F6;
+      --cyan: #06B6D4;
+      --violet: #8B5CF6;
+      --emerald: #10B981;
+      --amber: #F59E0B;
+      --rose: #F43F5E;
+      --fg: #F1F5F9;
+      --fg2: #94A3B8;
+      --fg3: #64748B;
+      --border: rgba(255, 255, 255, 0.07);
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(120px);
+      z-index: 0;
+    }
+
+    .glow-1 {
+      width: 500px;
+      height: 500px;
+      top: -100px;
+      left: -100px;
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    .glow-2 {
+      width: 400px;
+      height: 400px;
+      bottom: 100px;
+      right: -80px;
+      background: rgba(59, 130, 246, 0.05);
+    }
+
+    .page {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 100px 32px 100px;
+      position: relative;
+      z-index: 1;
+    }
+
+
+    /* ── NAVBAR ── */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 16px 0;
+      transition: background 0.3s, border-color 0.3s;
+      background: rgba(11, 17, 32, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-brand {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: var(--fg);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--fg2);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--fg);
+    }
+
+    .nav-link.active {
+      color: var(--fg);
+      font-weight: 600;
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 1.5px;
+      background: var(--emerald);
+      border-radius: 2px;
+    }
+
+
+    /* ── HERO ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: end;
+      padding: 64px 0 56px;
+      border-bottom: 1px solid var(--border);
+      animation: fadeIn 0.6s 0.05s ease both;
+    }
+
+    @media (max-width: 720px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(38px, 5.5vw, 60px);
+      line-height: 1.05;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      background: linear-gradient(130deg, var(--emerald), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-right p {
+      font-size: 15.5px;
+      color: var(--fg2);
+      line-height: 1.8;
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 56px 0 28px;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(22px, 2.8vw, 32px);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    .section-sub {
+      font-size: 13px;
+      color: var(--fg3);
+    }
+
+    /* ── TAGS ── */
+    .tag {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 5px;
+      border: 1px solid;
+      white-space: nowrap;
+    }
+
+    .tag-blue {
+      color: var(--blue);
+      border-color: rgba(59, 130, 246, 0.3);
+      background: rgba(59, 130, 246, 0.08);
+    }
+
+    .tag-emerald {
+      color: var(--emerald);
+      border-color: rgba(16, 185, 129, 0.3);
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    .tag-violet {
+      color: var(--violet);
+      border-color: rgba(139, 92, 246, 0.3);
+      background: rgba(139, 92, 246, 0.08);
+    }
+
+    /* ─────────────────────────────────────
+     SECTION 1: QUALIFICATION — 3 cards
+  ───────────────────────────────────── */
+    .qual-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      animation: fadeIn 0.55s 0.15s ease both;
+    }
+
+    @media (max-width: 640px) {
+      .qual-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .qual-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 26px 26px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .qual-card:hover {
+      border-color: rgba(255, 255, 255, 0.13);
+      transform: translateY(-2px);
+    }
+
+    .qual-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      border-radius: 16px 16px 0 0;
+    }
+
+    .qc-mql::after {
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+    }
+
+    .qc-sql::after {
+      background: linear-gradient(90deg, var(--emerald), var(--cyan));
+    }
+
+    .qc-pql::after {
+      background: linear-gradient(90deg, var(--violet), var(--blue));
+    }
+
+    .qual-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .qual-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .qual-icon svg {
+      width: 15px;
+      height: 15px;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .qc-mql .qual-icon {
+      background: rgba(59, 130, 246, 0.12);
+    }
+
+    .qc-mql .qual-icon svg {
+      stroke: var(--blue);
+    }
+
+    .qc-sql .qual-icon {
+      background: rgba(16, 185, 129, 0.12);
+    }
+
+    .qc-sql .qual-icon svg {
+      stroke: var(--emerald);
+    }
+
+    .qc-pql .qual-icon {
+      background: rgba(139, 92, 246, 0.12);
+    }
+
+    .qc-pql .qual-icon svg {
+      stroke: var(--violet);
+    }
+
+    .qual-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .qual-card p {
+      font-size: 13px;
+      color: var(--fg2);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    /* ─────────────────────────────────────
+     SECTION 2: TEMPERATURE — list rows
+  ───────────────────────────────────── */
+    .temp-list {
+      border-top: 1px solid var(--border);
+      animation: fadeIn 0.55s 0.2s ease both;
+    }
+
+    .temp-row {
+      display: grid;
+      grid-template-columns: 28px 130px 1fr auto;
+      gap: 20px;
+      align-items: center;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      cursor: default;
+    }
+
+    @media (max-width: 660px) {
+      .temp-row {
+        grid-template-columns: 24px 1fr;
+      }
+
+      .temp-row .temp-desc,
+      .temp-row .temp-tag {
+        grid-column: 2;
+      }
+    }
+
+    .temp-row::before {
+      content: '';
+      position: absolute;
+      left: -32px;
+      right: -32px;
+      top: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.018);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .temp-row:hover::before {
+      opacity: 1;
+    }
+
+    .temp-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      margin: 0 auto;
+    }
+
+    .td-hot {
+      background: var(--rose);
+      box-shadow: 0 0 9px rgba(244, 63, 94, 0.6);
+    }
+
+    .td-warm {
+      background: var(--amber);
+      box-shadow: 0 0 9px rgba(245, 158, 11, 0.6);
+    }
+
+    .td-cool {
+      background: var(--blue);
+      box-shadow: 0 0 9px rgba(59, 130, 246, 0.5);
+    }
+
+    .td-cold {
+      background: var(--violet);
+      box-shadow: 0 0 8px rgba(139, 92, 246, 0.4);
+    }
+
+    .temp-name {
+      font-size: 14.5px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      transition: color 0.2s;
+    }
+
+    .temp-row:hover .temp-name {
+      color: var(--emerald);
+    }
+
+    .temp-desc {
+      font-size: 13px;
+      color: var(--fg2);
+      line-height: 1.55;
+    }
+
+    .temp-tag {
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 3px 10px;
+      border-radius: 5px;
+      border: 1px solid;
+      white-space: nowrap;
+    }
+
+    .tt-hot {
+      color: var(--rose);
+      border-color: rgba(244, 63, 94, 0.3);
+      background: rgba(244, 63, 94, 0.07);
+    }
+
+    .tt-warm {
+      color: var(--amber);
+      border-color: rgba(245, 158, 11, 0.3);
+      background: rgba(245, 158, 11, 0.07);
+    }
+
+    .tt-cool {
+      color: var(--blue);
+      border-color: rgba(59, 130, 246, 0.3);
+      background: rgba(59, 130, 246, 0.07);
+    }
+
+    .tt-cold {
+      color: var(--violet);
+      border-color: rgba(139, 92, 246, 0.3);
+      background: rgba(139, 92, 246, 0.07);
+    }
+
+    /* ─────────────────────────────────────
+     SECTION 3: FUNNEL + SOURCE — 2 cols
+  ───────────────────────────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      animation: fadeIn 0.55s 0.25s ease both;
+    }
+
+    @media (max-width: 720px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 28px;
+    }
+
+    .panel-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--fg3);
+      margin-bottom: 20px;
+    }
+
+    /* Funnel rows */
+    .funnel-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .funnel-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .funnel-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 11px;
+      color: var(--fg3);
+      letter-spacing: 0.06em;
+      width: 22px;
+      flex-shrink: 0;
+    }
+
+    .funnel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .fd-1 {
+      background: var(--cyan);
+      box-shadow: 0 0 6px rgba(6, 182, 212, 0.5);
+    }
+
+    .fd-2 {
+      background: var(--blue);
+      box-shadow: 0 0 6px rgba(59, 130, 246, 0.5);
+    }
+
+    .fd-3 {
+      background: var(--emerald);
+      box-shadow: 0 0 6px rgba(16, 185, 129, 0.5);
+    }
+
+    .fd-4 {
+      background: var(--violet);
+      box-shadow: 0 0 6px rgba(139, 92, 246, 0.5);
+    }
+
+    .funnel-name {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      flex: 1;
+    }
+
+    .funnel-stage-label {
+      font-size: 12px;
+      color: var(--fg3);
+    }
+
+    /* Source rows */
+    .source-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .source-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .source-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .source-icon svg {
+      width: 14px;
+      height: 14px;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .si-in {
+      background: rgba(16, 185, 129, 0.12);
+    }
+
+    .si-in svg {
+      stroke: var(--emerald);
+    }
+
+    .si-out {
+      background: rgba(59, 130, 246, 0.12);
+    }
+
+    .si-out svg {
+      stroke: var(--blue);
+    }
+
+    .si-ref {
+      background: rgba(139, 92, 246, 0.12);
+    }
+
+    .si-ref svg {
+      stroke: var(--violet);
+    }
+
+    .source-name {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      flex: 1;
+    }
+
+    .source-sub {
+      font-size: 12px;
+      color: var(--fg2);
+      margin-top: 1px;
+    }
+
+    .source-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 5px;
+      border: 1px solid;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .st-in {
+      color: var(--emerald);
+      border-color: rgba(16, 185, 129, 0.3);
+      background: rgba(16, 185, 129, 0.07);
+    }
+
+    .st-out {
+      color: var(--blue);
+      border-color: rgba(59, 130, 246, 0.3);
+      background: rgba(59, 130, 246, 0.07);
+    }
+
+    .st-ref {
+      color: var(--violet);
+      border-color: rgba(139, 92, 246, 0.3);
+      background: rgba(139, 92, 246, 0.07);
+    }
+
+    /* ── CTA ── */
+    .cta-strip {
+      margin-top: 80px;
+      border-top: 1px solid var(--border);
+      padding-top: 60px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 40px;
+      animation: fadeIn 0.6s 0.4s ease both;
+    }
+
+    @media (max-width: 640px) {
+      .cta-strip {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .cta-copy h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(26px, 3.5vw, 40px);
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+
+    .cta-copy h2 em {
+      font-style: italic;
+      background: linear-gradient(130deg, var(--emerald), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cta-copy p {
+      font-size: 14.5px;
+      color: var(--fg2);
+      line-height: 1.7;
+      max-width: 460px;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-end;
+      flex-shrink: 0;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--emerald) 0%, #059669 100%);
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      padding: 14px 28px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 8px 28px rgba(16, 185, 129, 0.28);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-primary svg {
+      width: 15px;
+      height: 15px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .btn-ghost {
+      font-size: 12px;
+      color: var(--fg3);
+      letter-spacing: 0.02em;
+      text-align: center;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      margin-top: 60px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: fadeIn 0.6s 0.5s ease both;
+    }
+
+    .footer p {
+      font-size: 12px;
+      color: var(--fg3);
+      letter-spacing: 0.03em;
+    }
+
+    .footer-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .footer-dots span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .footer-dots span:nth-child(1) {
+      background: var(--emerald);
+      opacity: 0.6;
+    }
+
+    .footer-dots span:nth-child(2) {
+      background: var(--blue);
+      opacity: 0.6;
+    }
+
+    .footer-dots span:nth-child(3) {
+      background: var(--violet);
+      opacity: 0.6;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .qual-card:nth-child(1) {
+      animation: fadeIn 0.45s 0.15s ease both;
+    }
+
+    .qual-card:nth-child(2) {
+      animation: fadeIn 0.45s 0.22s ease both;
+    }
+
+    .qual-card:nth-child(3) {
+      animation: fadeIn 0.45s 0.29s ease both;
+    }
+
+    .temp-row:nth-child(1) {
+      animation: fadeIn 0.45s 0.18s ease both;
+    }
+
+    .temp-row:nth-child(2) {
+      animation: fadeIn 0.45s 0.25s ease both;
+    }
+
+    .temp-row:nth-child(3) {
+      animation: fadeIn 0.45s 0.32s ease both;
+    }
+
+    .temp-row:nth-child(4) {
+      animation: fadeIn 0.45s 0.39s ease both;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="glow-orb glow-1"></div>
+  <div class="glow-orb glow-2"></div>
+
+  <div class="page">
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-brand">GrowthOps</a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Services</a>
+          <a href="leadgen.html" class="nav-link active">Lead Generation</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div>
+        <h1>Qualified Leads at<br>Every Stage &amp;<br><em>Temperature</em></h1>
+      </div>
+      <div class="hero-right">
+        <p>GrowthOps delivers a ready-to-work pipeline—every lead scored, enriched, and categorized so your team always
+          knows who to contact, when, and how.</p>
+      </div>
+    </section>
+
+    <!-- QUALIFICATION STATUS -->
+    <div class="section-header">
+      <h2 class="section-title">Qualification Status</h2>
+      <span class="section-sub">How ready is this lead to buy?</span>
+    </div>
+
+    <div class="qual-grid">
+
+      <div class="qual-card qc-mql">
+        <div class="qual-card-top">
+          <span class="tag tag-blue">MQL</span>
+          <div class="qual-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </div>
+        </div>
+        <h3>Marketing Qualified</h3>
+        <p>Engaged with your brand and matches your ICP. Not yet sales-ready, but worth nurturing.</p>
+      </div>
+
+      <div class="qual-card qc-sql">
+        <div class="qual-card-top">
+          <span class="tag tag-emerald">SQL</span>
+          <div class="qual-icon">
+            <svg viewBox="0 0 24 24">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg>
+          </div>
+        </div>
+        <h3>Sales Qualified</h3>
+        <p>Vetted for budget, authority, need, and timeline. Ready for a direct sales conversation.</p>
+      </div>
+
+      <div class="qual-card qc-pql">
+        <div class="qual-card-top">
+          <span class="tag tag-violet">PQL</span>
+          <div class="qual-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+          </div>
+        </div>
+        <h3>Product Qualified</h3>
+        <p>Already experiencing product value. Highest conversion likelihood—ready to upgrade or expand.</p>
+      </div>
+
+    </div>
+
+    <!-- ENGAGEMENT TEMPERATURE -->
+    <div class="section-header">
+      <h2 class="section-title">Engagement Temperature</h2>
+      <span class="section-sub">How active is this lead right now?</span>
+    </div>
+
+    <div class="temp-list">
+
+      <div class="temp-row">
+        <div class="temp-dot td-hot"></div>
+        <div class="temp-name">Hot</div>
+        <div class="temp-desc">Active within 7 days — demo requests, replies, or pricing page visits. Follow up same
+          day.</div>
+        <span class="temp-tag tt-hot">Act Now</span>
+      </div>
+
+      <div class="temp-row">
+        <div class="temp-dot td-warm"></div>
+        <div class="temp-name">Warm</div>
+        <div class="temp-desc">Engaged in the last 30 days. Nurture with targeted, value-focused touchpoints.</div>
+        <span class="temp-tag tt-warm">Nurture</span>
+      </div>
+
+      <div class="temp-row">
+        <div class="temp-dot td-cool"></div>
+        <div class="temp-name">Cool</div>
+        <div class="temp-desc">Went quiet after initial interest (30–90 days). Re-engage with a fresh angle or offer.
+        </div>
+        <span class="temp-tag tt-cool">Re-engage</span>
+      </div>
+
+      <div class="temp-row">
+        <div class="temp-dot td-cold"></div>
+        <div class="temp-name">Cold</div>
+        <div class="temp-desc">No activity in 90+ days. Routed to long-term drip or flagged for ICP re-evaluation.</div>
+        <span class="temp-tag tt-cold">Drip</span>
+      </div>
+
+    </div>
+
+    <!-- FUNNEL STAGE + ACQUISITION SOURCE -->
+    <div class="section-header">
+      <h2 class="section-title">Funnel Stage &amp; Source</h2>
+      <span class="section-sub">Where they are and how they got there</span>
+    </div>
+
+    <div class="two-col">
+
+      <div class="panel-card">
+        <div class="panel-label">Funnel Stage</div>
+
+        <div class="funnel-row">
+          <span class="funnel-num">01</span>
+          <div class="funnel-dot fd-1"></div>
+          <div class="funnel-name">Top of Funnel</div>
+          <div class="funnel-stage-label">Awareness</div>
+        </div>
+
+        <div class="funnel-row">
+          <span class="funnel-num">02</span>
+          <div class="funnel-dot fd-2"></div>
+          <div class="funnel-name">Middle of Funnel</div>
+          <div class="funnel-stage-label">Consideration</div>
+        </div>
+
+        <div class="funnel-row">
+          <span class="funnel-num">03</span>
+          <div class="funnel-dot fd-3"></div>
+          <div class="funnel-name">Bottom of Funnel</div>
+          <div class="funnel-stage-label">Decision</div>
+        </div>
+
+        <div class="funnel-row">
+          <span class="funnel-num">04</span>
+          <div class="funnel-dot fd-4"></div>
+          <div class="funnel-name">Close-Ready</div>
+          <div class="funnel-stage-label">Opportunity</div>
+        </div>
+
+      </div>
+
+      <div class="panel-card">
+        <div class="panel-label">Acquisition Source</div>
+
+        <div class="source-row">
+          <div class="source-icon si-in">
+            <svg viewBox="0 0 24 24">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+          </div>
+          <div style="flex:1">
+            <div class="source-name">Inbound</div>
+            <div class="source-sub">Content, search &amp; paid media</div>
+          </div>
+          <span class="source-tag st-in">Pull</span>
+        </div>
+
+        <div class="source-row">
+          <div class="source-icon si-out">
+            <svg viewBox="0 0 24 24">
+              <line x1="22" y1="2" x2="11" y2="13" />
+              <polygon points="22 2 15 22 11 13 2 9 22 2" />
+            </svg>
+          </div>
+          <div style="flex:1">
+            <div class="source-name">Outbound</div>
+            <div class="source-sub">ICP-matched, sequenced by GrowthOps</div>
+          </div>
+          <span class="source-tag st-out">Push</span>
+        </div>
+
+        <div class="source-row">
+          <div class="source-icon si-ref">
+            <svg viewBox="0 0 24 24">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </div>
+          <div style="flex:1">
+            <div class="source-name">Referral</div>
+            <div class="source-sub">Customers, partners &amp; networks</div>
+          </div>
+          <span class="source-tag st-ref">Network</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-strip">
+      <div class="cta-copy">
+        <h2>Stop chasing leads.<br>Start <em>closing them.</em></h2>
+        <p>GrowthOps builds your pipeline end-to-end. Every lead your team receives is qualified, enriched, and ready to
+          move.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="#" class="btn-primary">
+          Build Your Pipeline
+          <svg viewBox="0 0 24 24">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
+        <span class="btn-ghost">No commitment required to start</span>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>© GrowthOps · Lead Generation &amp; Pipeline Development</p>
+      <div class="footer-dots">
+        <span></span><span></span><span></span>
+      </div>
+    </footer>
+
+  </div>
+</body>
+
+</html>
